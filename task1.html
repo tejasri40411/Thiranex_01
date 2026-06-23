@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kongathi Teja Sri — Java Full Stack Developer. Building scalable web applications with Spring Boot, React.js, and MySQL." />
+  <title>Kongathi Teja Sri | Java Full Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0B1120;
+      --slate:   #1A2740;
+      --card:    #162035;
+      --teal:    #00D9C0;
+      --teal-dim:#00b3a0;
+      --white:   #F0F4FF;
+      --muted:   #8A9BBE;
+      --border:  #243352;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body:    'Inter', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5%;
+      background: rgba(11,17,32,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700; font-size: 1.1rem;
+      color: var(--teal); letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta {
+      border: 1px solid var(--teal); color: var(--teal);
+      padding: 0.4rem 1.1rem; border-radius: 4px;
+      font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .nav-cta:hover { background: var(--teal); color: var(--navy); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: 0.3s; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 5% 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: center; max-width: 1100px; margin: 0 auto; width: 100%;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.82rem; color: var(--teal);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero-eyebrow::before { content: "$ "; opacity: 0.5; }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -0.03em; margin-bottom: 1rem;
+    }
+    h1 span { color: var(--teal); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 440px; margin-bottom: 2rem; line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--teal); color: var(--navy);
+      font-weight: 700; font-size: 0.9rem;
+      padding: 0.75rem 1.8rem; border-radius: 5px;
+      text-decoration: none; transition: all 0.2s; border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--teal-dim); transform: translateY(-1px); }
+    .btn-ghost {
+      border: 1px solid var(--border); color: var(--white);
+      font-weight: 500; font-size: 0.9rem;
+      padding: 0.75rem 1.8rem; border-radius: 5px;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* Terminal block */
+    .terminal {
+      background: var(--slate);
+      border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+    .terminal-bar {
+      padding: 0.7rem 1rem; background: #0f1a2e;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+    .terminal-title {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--muted); margin-left: 0.5rem;
+    }
+    .terminal-body { padding: 1.2rem 1.4rem; font-family: var(--font-mono); font-size: 0.82rem; line-height: 2; }
+    .t-line { display: flex; align-items: flex-start; gap: 0.5rem; }
+    .t-prompt { color: var(--teal); white-space: nowrap; }
+    .t-text { color: #a8d8cb; }
+    .t-key { color: #f9c74f; }
+    .t-val { color: var(--white); }
+    .t-comment { color: var(--muted); }
+    .cursor {
+      display: inline-block; width: 8px; height: 1em;
+      background: var(--teal); vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 5%; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-family: var(--font-display); font-size: clamp(1.6rem,3.5vw,2.4rem);
+      font-weight: 700; letter-spacing: -0.02em; margin-bottom: 3rem;
+    }
+    h2 span { color: var(--teal); }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--slate); }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.4rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover { border-color: var(--teal); transform: translateY(-3px); }
+    .skill-card h3 {
+      font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+      color: var(--teal); margin-bottom: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      background: rgba(0,217,192,0.08); border: 1px solid rgba(0,217,192,0.2);
+      color: var(--white); font-size: 0.78rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; font-family: var(--font-mono);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem;
+    }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.8rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .project-card:hover { border-color: var(--teal); transform: translateY(-4px); }
+    .project-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: rgba(0,217,192,0.12); border: 1px solid rgba(0,217,192,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 1rem;
+    }
+    .project-card h3 {
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .project-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; flex: 1; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
+    .stack-badge {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--muted); font-size: 0.72rem; padding: 0.2rem 0.55rem;
+      border-radius: 3px; font-family: var(--font-mono);
+    }
+    .project-links { display: flex; gap: 0.8rem; margin-top: 1.2rem; }
+    .project-link {
+      font-size: 0.82rem; font-weight: 500; color: var(--teal);
+      text-decoration: none; display: flex; align-items: center; gap: 0.3rem;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--slate); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start; }
+    .about-avatar {
+      aspect-ratio: 1; border-radius: 12px;
+      background: var(--card); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative; overflow: hidden;
+    }
+    .avatar-ring {
+      position: absolute; inset: -2px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--teal), transparent 60%);
+      z-index: -1;
+    }
+    .about-info h3 {
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.4rem;
+    }
+    .about-role { color: var(--teal); font-size: 0.9rem; font-weight: 500; margin-bottom: 1.2rem; font-family: var(--font-mono); }
+    .about-info p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
+    .edu-block { margin-top: 1.5rem; }
+    .edu-item {
+      padding: 1rem 1.2rem; border-left: 2px solid var(--teal);
+      background: var(--card); border-radius: 0 6px 6px 0; margin-bottom: 0.8rem;
+    }
+    .edu-item h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .edu-item p { color: var(--muted); font-size: 0.82rem; margin: 0; }
+    .edu-score { color: var(--teal); font-family: var(--font-mono); font-size: 0.8rem; margin-top: 0.3rem; }
+
+    /* ── CERTS ── */
+    .certs-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .cert-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 0.4rem 1rem;
+      font-size: 0.82rem; font-weight: 500;
+    }
+    .cert-badge .cert-dot { color: var(--teal); }
+
+    /* ── CONTACT ── */
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .contact-intro h3 {
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.8rem;
+    }
+    .contact-intro p { color: var(--muted); line-height: 1.8; font-size: 0.95rem; }
+    .contact-items { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 0.8rem;
+      color: var(--muted); font-size: 0.9rem;
+    }
+    .contact-item a { color: var(--muted); text-decoration: none; }
+    .contact-item a:hover { color: var(--teal); }
+    .ci-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(0,217,192,0.1); border: 1px solid rgba(0,217,192,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
+    }
+
+    /* Contact Form */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    label { font-size: 0.8rem; font-weight: 500; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+    input, textarea {
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--white); padding: 0.75rem 1rem; border-radius: 6px;
+      font-family: var(--font-body); font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+      resize: vertical;
+    }
+    input:focus, textarea:focus { border-color: var(--teal); }
+    input::placeholder, textarea::placeholder { color: #4a5a7a; }
+    .form-submit { align-self: flex-start; }
+    .success-msg {
+      display: none; color: var(--teal); font-size: 0.88rem;
+      padding: 0.5rem 0; font-family: var(--font-mono);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 5%; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    footer p { color: var(--muted); font-size: 0.83rem; }
+    .footer-logo { font-family: var(--font-display); font-weight: 700; color: var(--teal); font-size: 1rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--slate); border-bottom: 1px solid var(--border); padding: 1.5rem 5%; gap: 1.2rem; }
+      .nav-links.open { display: flex; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .terminal { display: none; }
+      .about-grid, .contact-wrap { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .about-avatar { max-width: 200px; margin: 0 auto; }
+    }
+
+    /* Scroll fade-in */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">KTS</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-grid">
+    <div class="fade-in">
+      <p class="hero-eyebrow">init portfolio --mode=production</p>
+      <h1>Hi, I'm <span>Teja Sri</span><br>Full Stack Developer</h1>
+      <p class="hero-sub">
+        I build fast, scalable web apps with Java Spring Boot on the backend and React.js on the front — and I like the work I ship to actually run in production.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="terminal fade-in" style="transition-delay:0.2s">
+      <div class="terminal-bar">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="terminal-title">teja@portfolio ~ bash</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">❯</span><span class="t-text">whoami</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-key">name:</span> <span class="t-val">"Kongathi Teja Sri"</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-key">role:</span> <span class="t-val">"Java Full Stack Developer"</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-key">based:</span> <span class="t-val">"Mangalagiri, AP, India"</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-key">cgpa:</span> <span class="t-val">7.0</span></div>
+        <br>
+        <div class="t-line"><span class="t-prompt">❯</span><span class="t-text">skills --list</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-comment">// backend</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-val">["Java","Spring Boot","Hibernate","MySQL"]</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-comment">// frontend</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-val">["React.js","HTML","CSS","JavaScript"]</span></div>
+        <br>
+        <div class="t-line"><span class="t-prompt">❯</span><span class="t-text">status</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-key">available:</span> <span class="t-val" style="color:#28c840">true</span></div>
+        <div class="t-line" style="margin-left:1rem"><span class="t-key">open_to:</span> <span class="t-val">"Full-time / Internship"</span></div>
+        <div class="t-line"><span class="t-prompt">❯</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-label">What I Work With</p>
+    <h2>Tech <span>Stack</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <h3>Languages</h3>
+        <div class="skill-tags">
+          <span class="tag">Java</span>
+          <span class="tag">Python</span>
+          <span class="tag">C</span>
+          <span class="tag">C++</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <h3>Backend</h3>
+        <div class="skill-tags">
+          <span class="tag">Spring Boot</span>
+          <span class="tag">Spring MVC</span>
+          <span class="tag">Spring Core</span>
+          <span class="tag">Hibernate/JPA</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">Java Servlets</span>
+          <span class="tag">JSP</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <h3>Frontend</h3>
+        <div class="skill-tags">
+          <span class="tag">React.js</span>
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">React Hooks</span>
+          <span class="tag">Axios</span>
+          <span class="tag">React Router</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <h3>Database &amp; Tools</h3>
+        <div class="skill-tags">
+          <span class="tag">MySQL</span>
+          <span class="tag">JDBC</span>
+          <span class="tag">Postman</span>
+          <span class="tag">MySQL Workbench</span>
+          <span class="tag">Eclipse</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <p class="section-label">What I've Built</p>
+    <h2>Featured <span>Projects</span></h2>
+    <div class="projects-grid">
+
+      <div class="project-card fade-in">
+        <div class="project-icon">🏥</div>
+        <h3>Hospital Management System</h3>
+        <p>
+          A full-featured web application to digitise hospital workflows — handling patient registration, doctor appointment booking, and medical records management. Built with MVC architecture for clean separation of concerns.
+        </p>
+        <div class="project-stack">
+          <span class="stack-badge">Java Servlets</span>
+          <span class="stack-badge">JSP</span>
+          <span class="stack-badge">JDBC</span>
+          <span class="stack-badge">MySQL</span>
+          <span class="stack-badge">HTML/CSS</span>
+          <span class="stack-badge">MVC</span>
+        </div>
+        <div class="project-links">
+          <a href="#contact" class="project-link">→ Request Demo</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-in" style="transition-delay:0.1s">
+        <div class="project-icon">📊</div>
+        <h3>User Dashboard — CRUD SPA</h3>
+        <p>
+          A responsive single-page application for full CRUD operations on user data, integrated with the JSONPlaceholder REST API. Features client-side routing and efficient lifecycle management with React Hooks.
+        </p>
+        <div class="project-stack">
+          <span class="stack-badge">React.js</span>
+          <span class="stack-badge">React Hooks</span>
+          <span class="stack-badge">Axios</span>
+          <span class="stack-badge">React Router</span>
+          <span class="stack-badge">REST API</span>
+        </div>
+        <div class="project-links">
+          <a href="#contact" class="project-link">→ View Project</a>
+        </div>
+      </div>
+
+      <div class="project-card fade-in" style="transition-delay:0.2s">
+        <div class="project-icon">⚙️</div>
+        <h3>Spring Boot REST Backend</h3>
+        <p>
+          A clean RESTful API service built with Spring Boot and Hibernate ORM, exposing well-structured endpoints for data management. Tested and documented via Postman with MySQL as the persistence layer.
+        </p>
+        <div class="project-stack">
+          <span class="stack-badge">Spring Boot</span>
+          <span class="stack-badge">Spring ORM</span>
+          <span class="stack-badge">Hibernate</span>
+          <span class="stack-badge">MySQL</span>
+          <span class="stack-badge">Postman</span>
+        </div>
+        <div class="project-links">
+          <a href="#contact" class="project-link">→ View Project</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label">Who I Am</p>
+    <h2>About <span>Me</span></h2>
+    <div class="about-grid">
+      <div>
+        <div class="about-avatar">
+          <div class="avatar-ring"></div>
+          👩‍💻
+        </div>
+        <div class="certs-row" style="margin-top: 1.8rem;">
+          <div class="cert-badge"><span class="cert-dot">✦</span> C — HackerRank</div>
+          <div class="cert-badge"><span class="cert-dot">✦</span> Python — SoloLearn</div>
+          <div class="cert-badge"><span class="cert-dot">✦</span> Java — SoloLearn</div>
+          <div class="cert-badge"><span class="cert-dot">✦</span> C++ — SoloLearn</div>
+          <div class="cert-badge"><span class="cert-dot">✦</span> HTML/CSS/JS</div>
+        </div>
+      </div>
+      <div class="about-info">
+        <h3>Kongathi Teja Sri</h3>
+        <p class="about-role">Java Full Stack Developer · B.Tech CSE</p>
+        <p>
+          I'm a Computer Science undergraduate at PSCMR Engineering and Technology (Vijayawada), currently in my final years and actively building real-world projects to sharpen my full-stack skills.
+        </p>
+        <p>
+          My focus is on the Java ecosystem — Spring Boot for building solid backends, React.js for clean, interactive frontends, and MySQL for structured data. I like building things that are maintainable, not just things that run.
+        </p>
+        <p>
+          I'm seeking an internship or entry-level Java Full Stack role where I can contribute to an engineering team, keep learning fast, and ship meaningful features.
+        </p>
+        <div class="edu-block">
+          <div class="edu-item">
+            <h4>PSCMR Engineering &amp; Technology</h4>
+            <p>B.Tech — Computer Science &amp; Engineering · Vijayawada</p>
+            <p class="edu-score">CGPA: 7.0 / 10 &nbsp;·&nbsp; 2024 – Present</p>
+          </div>
+          <div class="edu-item">
+            <h4>Narayana Junior College</h4>
+            <p>Board of Intermediate Education · Mangalagiri, AP</p>
+            <p class="edu-score">528 / 600 &nbsp;·&nbsp; 2022 – 2024</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Let's Talk</p>
+    <h2>Get in <span>Touch</span></h2>
+    <div class="contact-wrap">
+      <div class="contact-intro fade-in">
+        <h3>Open to opportunities</h3>
+        <p>
+          I'm actively looking for internships and full-time roles in Java Full Stack development. If you're building something interesting and want a motivated developer who learns fast — let's connect.
+        </p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="ci-icon">📧</div>
+            <a href="mailto:tsri4041@gmail.com">tsri4041@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📱</div>
+            <span>+91 9390205109</span>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📍</div>
+            <span>Mangalagiri, Andhra Pradesh, India</span>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">🔗</div>
+            <a href="https://linkedin.com/in/teja-sri-9a92a8365" target="_blank" rel="noopener">linkedin.com/in/teja-sri-9a92a8365</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in" style="transition-delay:0.15s">
+        <div class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Recruiter" />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="hello@company.com" />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="Job opportunity / Collaboration" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Tell me about the role or project..."></textarea>
+          </div>
+          <button class="btn-primary form-submit" onclick="handleSubmit()">Send Message →</button>
+          <p class="success-msg" id="successMsg">✓ Message sent! I'll get back to you soon.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Kongathi Teja Sri</span>
+  <p>© 2025 · Built with HTML, CSS &amp; JavaScript</p>
+  <p style="color:var(--teal);font-family:var(--font-mono);font-size:0.78rem">Available for hire ●</p>
+</footer>
+
+<script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Contact form
+  function handleSubmit() {
+    const f = document.getElementById('fname').value;
+    const e = document.getElementById('email').value;
+    const m = document.getElementById('message').value;
+    if (!f || !e || !m) { alert('Please fill in at least your name, email, and message.'); return; }
+    document.getElementById('successMsg').style.display = 'block';
+    ['fname','lname','email','subject','message'].forEach(id => document.getElementById(id).value = '');
+  }
+</script>
+</body>
+</html>
